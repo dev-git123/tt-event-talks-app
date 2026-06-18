@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="View the latest BigQuery Release Notes, filter updates, and share them directly on X (Twitter).">
+    <title>BigQuery Release Notes Hub</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="bg-glow"></div>
+    <div class="bg-glow-2"></div>
+
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-database"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="brand">BigQuery</span>
+                    <span class="sub">Release Notes</span>
+                </div>
+            </div>
+            <div class="nav-actions">
+                <button id="refresh-btn" class="btn btn-primary" title="Refresh Release Notes">
+                    <i class="fa-solid fa-arrows-rotate spinner-icon"></i>
+                    <span>Refresh</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <section class="intro-section">
+            <h1>Stay updated with BigQuery</h1>
+            <p>Track the latest features, enhancements, and bug fixes. Select any update to compose and share a tweet.</p>
+            
+            <div class="search-filter-bar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="search-input" placeholder="Search release notes...">
+                </div>
+                <div class="filter-box">
+                    <button class="filter-chip active" data-filter="all">All Updates</button>
+                    <button class="filter-chip" data-filter="feature">Features</button>
+                    <button class="filter-chip" data-filter="change">Changes</button>
+                    <button class="filter-chip" data-filter="deprecation">Deprecations</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-layout">
+            <div class="notes-container">
+                <div id="loading-state" class="loading-state hidden">
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                </div>
+
+                <div id="error-state" class="error-state hidden">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <h3>Failed to load release notes</h3>
+                    <p id="error-msg">Please try again later.</p>
+                    <button id="retry-btn" class="btn btn-secondary">Retry</button>
+                </div>
+
+                <div id="empty-state" class="empty-state hidden">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <h3>No release notes found</h3>
+                    <p>Try searching for a different keyword or check back later.</p>
+                </div>
+
+                <div id="notes-list" class="notes-list">
+                    <!-- Release notes cards will be injected here -->
+                </div>
+            </div>
+
+            <!-- Tweet Composer Drawer/Sidebar -->
+            <aside id="tweet-drawer" class="tweet-drawer">
+                <div class="drawer-header">
+                    <h3><i class="fa-brands fa-x-twitter"></i> Share Update</h3>
+                    <button id="close-drawer" class="close-btn" aria-label="Close drawer">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="drawer-body">
+                    <div class="selected-note-preview">
+                        <span id="preview-tag" class="tag">Feature</span>
+                        <h4 id="preview-title">No update selected</h4>
+                        <p id="preview-date">Select an update from the list to compose a tweet.</p>
+                    </div>
+                    
+                    <div class="tweet-compose-area">
+                        <label for="tweet-textarea">Compose Tweet</label>
+                        <textarea id="tweet-textarea" rows="6" maxlength="280" placeholder="What's happening?"></textarea>
+                        <div class="tweet-footer">
+                            <span id="char-counter" class="char-counter">280</span>
+                            <button id="tweet-btn" class="btn btn-tweet" disabled>
+                                <i class="fa-brands fa-x-twitter"></i>
+                                <span>Post Tweet</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>BigQuery Release Notes Hub &copy; 2026. Powered by Google Cloud RSS Feed.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
